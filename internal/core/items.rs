@@ -109,9 +109,6 @@ pub struct ItemVTable {
     /// bindings are set.
     pub init: extern "C" fn(core::pin::Pin<VRef<ItemVTable>>),
 
-    /// Returns the geometry of this item (relative to its parent item)
-    pub geometry: extern "C" fn(core::pin::Pin<VRef<ItemVTable>>) -> LogicalRect,
-
     /// offset in bytes from the *const ItemImpl.
     /// isize::MAX  means None
     #[allow(non_upper_case_globals)]
@@ -184,13 +181,6 @@ pub struct Empty {
 
 impl Item for Empty {
     fn init(self: Pin<&Self>) {}
-
-    fn geometry(self: Pin<&Self>) -> LogicalRect {
-        LogicalRect::new(
-            LogicalPoint::from_lengths(self.x(), self.y()),
-            LogicalSize::from_lengths(self.width(), self.height()),
-        )
-    }
 
     fn layout_info(
         self: Pin<&Self>,
@@ -272,13 +262,6 @@ pub struct Rectangle {
 
 impl Item for Rectangle {
     fn init(self: Pin<&Self>) {}
-
-    fn geometry(self: Pin<&Self>) -> LogicalRect {
-        LogicalRect::new(
-            LogicalPoint::from_lengths(self.x(), self.y()),
-            LogicalSize::from_lengths(self.width(), self.height()),
-        )
-    }
 
     fn layout_info(
         self: Pin<&Self>,
@@ -364,13 +347,6 @@ pub struct BorderRectangle {
 
 impl Item for BorderRectangle {
     fn init(self: Pin<&Self>) {}
-
-    fn geometry(self: Pin<&Self>) -> LogicalRect {
-        LogicalRect::new(
-            LogicalPoint::from_lengths(self.x(), self.y()),
-            LogicalSize::from_lengths(self.width(), self.height()),
-        )
-    }
 
     fn layout_info(
         self: Pin<&Self>,
@@ -471,13 +447,6 @@ pub struct TouchArea {
 
 impl Item for TouchArea {
     fn init(self: Pin<&Self>) {}
-
-    fn geometry(self: Pin<&Self>) -> LogicalRect {
-        LogicalRect::new(
-            LogicalPoint::from_lengths(self.x(), self.y()),
-            LogicalSize::from_lengths(self.width(), self.height()),
-        )
-    }
 
     fn layout_info(
         self: Pin<&Self>,
@@ -651,13 +620,6 @@ pub struct FocusScope {
 impl Item for FocusScope {
     fn init(self: Pin<&Self>) {}
 
-    fn geometry(self: Pin<&Self>) -> LogicalRect {
-        LogicalRect::new(
-            LogicalPoint::from_lengths(self.x(), self.y()),
-            LogicalSize::from_lengths(self.width(), self.height()),
-        )
-    }
-
     fn layout_info(
         self: Pin<&Self>,
         _orientation: Orientation,
@@ -772,13 +734,6 @@ pub struct Clip {
 impl Item for Clip {
     fn init(self: Pin<&Self>) {}
 
-    fn geometry(self: Pin<&Self>) -> LogicalRect {
-        LogicalRect::new(
-            LogicalPoint::from_lengths(self.x(), self.y()),
-            LogicalSize::from_lengths(self.width(), self.height()),
-        )
-    }
-
     fn layout_info(
         self: Pin<&Self>,
         _orientation: Orientation,
@@ -868,13 +823,6 @@ pub struct Opacity {
 
 impl Item for Opacity {
     fn init(self: Pin<&Self>) {}
-
-    fn geometry(self: Pin<&Self>) -> LogicalRect {
-        LogicalRect::new(
-            LogicalPoint::from_lengths(self.x(), self.y()),
-            LogicalSize::from_lengths(self.width(), self.height()),
-        )
-    }
 
     fn layout_info(
         self: Pin<&Self>,
@@ -985,13 +933,6 @@ pub struct Layer {
 impl Item for Layer {
     fn init(self: Pin<&Self>) {}
 
-    fn geometry(self: Pin<&Self>) -> LogicalRect {
-        LogicalRect::new(
-            LogicalPoint::from_lengths(self.x(), self.y()),
-            LogicalSize::from_lengths(self.width(), self.height()),
-        )
-    }
-
     fn layout_info(
         self: Pin<&Self>,
         _orientation: Orientation,
@@ -1074,13 +1015,6 @@ pub struct Rotate {
 
 impl Item for Rotate {
     fn init(self: Pin<&Self>) {}
-
-    fn geometry(self: Pin<&Self>) -> LogicalRect {
-        LogicalRect::new(
-            LogicalPoint::from_lengths(self.x(), self.y()),
-            LogicalSize::from_lengths(self.width(), self.height()),
-        )
-    }
 
     fn layout_info(
         self: Pin<&Self>,
@@ -1200,13 +1134,6 @@ pub struct WindowItem {
 impl Item for WindowItem {
     fn init(self: Pin<&Self>) {}
 
-    fn geometry(self: Pin<&Self>) -> LogicalRect {
-        LogicalRect::new(
-            LogicalPoint::default(),
-            LogicalSize::from_lengths(self.width(), self.height()),
-        )
-    }
-
     fn layout_info(
         self: Pin<&Self>,
         _orientation: Orientation,
@@ -1320,13 +1247,6 @@ pub struct BoxShadow {
 
 impl Item for BoxShadow {
     fn init(self: Pin<&Self>) {}
-
-    fn geometry(self: Pin<&Self>) -> LogicalRect {
-        LogicalRect::new(
-            LogicalPoint::from_lengths(self.x(), self.y()),
-            LogicalSize::from_lengths(self.width(), self.height()),
-        )
-    }
 
     fn layout_info(
         self: Pin<&Self>,
