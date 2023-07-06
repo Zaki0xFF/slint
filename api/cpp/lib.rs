@@ -137,13 +137,15 @@ pub unsafe extern "C" fn slint_testing_init_backend() {
     i_slint_backend_testing::init();
 }
 
+use esp_backtrace as _;
+
 #[cfg(not(feature = "std"))]
 mod allocator {
     use core::alloc::Layout;
     use core::ffi::c_void;
     extern "C" {
         pub fn free(p: *mut c_void);
-        // This function is part of C11 & C++17
+        // This is a C11/C++17 function
         pub fn aligned_alloc(alignment: usize, size: usize) -> *mut c_void;
     }
 
@@ -159,10 +161,4 @@ mod allocator {
 
     #[global_allocator]
     static ALLOCATOR: CAlloc = CAlloc;
-}
-
-#[cfg(not(feature = "std"))]
-#[panic_handler]
-fn panic(_info: &core::panic::PanicInfo) -> ! {
-    loop {}
 }
