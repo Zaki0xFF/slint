@@ -44,8 +44,8 @@ if (APPLE AND SLINT_IS_TOPLEVEL_BUILD)
     # corrosion could provide the Cargo.toml package version as a CMake target property.
     corrosion_add_target_local_rustflags(slint-cpp -Clink-arg=-Wl,-install_name,@rpath/libslint_cpp.dylib,-current_version,${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR},-compatibility_version,${PROJECT_VERSION_MAJOR}.0)
     # Set this one to false again explicitely because Corrosion will starting setting this property to true by default.
-    set_target_properties(slint-cpp-shared PROPERTIES IMPORTED_NO_SONAME 0)
-    set_target_properties(slint-cpp-shared PROPERTIES IMPORTED_SONAME libslint_cpp.dylib)
+    #set_target_properties(slint-cpp-shared PROPERTIES IMPORTED_NO_SONAME 0)
+    #set_target_properties(slint-cpp-shared PROPERTIES IMPORTED_SONAME libslint_cpp.dylib)
 endif()
 
 set_property(
@@ -285,11 +285,11 @@ install(TARGETS Slint slint-cpp
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
-install(FILES $<TARGET_FILE:slint-cpp-shared> TYPE LIB)
-
-if(WIN32)
-    install(FILES $<TARGET_LINKER_FILE:slint-cpp-shared> TYPE LIB)
-endif()
+#install(FILES $<TARGET_FILE:slint-cpp-shared> TYPE LIB)
+#
+#if(WIN32)
+#    install(FILES $<TARGET_LINKER_FILE:slint-cpp-shared> TYPE LIB)
+#endif()
 
 if(SLINT_FEATURE_COMPILER)
     install(PROGRAMS $<TARGET_FILE:slint-compiler> TYPE BIN)
@@ -300,18 +300,18 @@ endif()
 # locations. Since we are writing to a config file Generator expressions are not
 # an option.
 function(_slint_write_configure_file)
-    foreach(prop
-        IMPORTED_LOCATION IMPORTED_LOCATION_DEBUG IMPORTED_LOCATION_RELEASE
-        IMPORTED_LOCATION_RELWITHDEBINFO IMPORTED_LOCATION_MINSIZEREL
-        IMPORTED_IMPLIB IMPORTED_IMPLIB_DEBUG IMPORTED_IMPLIB_RELEASE
-        IMPORTED_IMPLIB_RELWITHDEBINFO IMPORTED_IMPLIB_MINSIZEREL)
-        get_target_property(value slint-cpp-shared ${prop})
-
-        if(value)
-            get_filename_component(value ${value} NAME)
-            list(APPEND SLINT_LIB_PROPERTIES ${prop} "\${_IMPORT_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${value}")
-        endif()
-    endforeach()
+#    foreach(prop
+#        IMPORTED_LOCATION IMPORTED_LOCATION_DEBUG IMPORTED_LOCATION_RELEASE
+#        IMPORTED_LOCATION_RELWITHDEBINFO IMPORTED_LOCATION_MINSIZEREL
+#        IMPORTED_IMPLIB IMPORTED_IMPLIB_DEBUG IMPORTED_IMPLIB_RELEASE
+#        IMPORTED_IMPLIB_RELWITHDEBINFO IMPORTED_IMPLIB_MINSIZEREL)
+#        get_target_property(value slint-cpp-shared ${prop})
+#
+#        if(value)
+#            get_filename_component(value ${value} NAME)
+#            list(APPEND SLINT_LIB_PROPERTIES ${prop} "\${_IMPORT_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${value}")
+#        endif()
+#    endforeach()
 
     get_property(_SLINT_STYLE GLOBAL PROPERTY SLINT_STYLE)
     configure_package_config_file("cmake/SlintConfig.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/Slint/SlintConfig.cmake" INSTALL_DESTINATION lib/cmake/Slint)
