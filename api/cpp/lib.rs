@@ -137,8 +137,6 @@ pub unsafe extern "C" fn slint_testing_init_backend() {
     i_slint_backend_testing::init();
 }
 
-use esp_backtrace as _;
-
 #[cfg(not(feature = "std"))]
 mod allocator {
     use core::alloc::Layout;
@@ -175,4 +173,10 @@ mod allocator {
 
     #[global_allocator]
     static ALLOCATOR: CAlloc = CAlloc;
+}
+
+#[cfg(not(feature = "std"))]
+#[panic_handler]
+fn panic(_info: &core::panic::PanicInfo) -> ! {
+    loop {}
 }
