@@ -21,11 +21,11 @@ jobs:
       RUST_BACKTRACE: 1
     strategy:
       matrix:
-        os: [ubuntu-22.04, macos-11] # windows-2022 disabled due to https://github.com/actions/runner-images/issues/8125
+        os: [ubuntu-22.04, macos-11, windows-2022]
         rust_version: [stable, "1.70"]
         include:
-#          - os: windows-2022
-#            extra_args: "--exclude ffmpeg"
+          - os: windows-2022
+            extra_args: "--exclude ffmpeg"
           - os: macos-11
             extra_args: "--exclude ffmpeg"
         exclude:
@@ -58,6 +58,12 @@ jobs:
       run: |
           echo "SLINT_STYLE=fluent" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           echo "SLINT_NO_QT=1" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+    - name: Work around Skia's clang version detection script bailing out at incomplete directory name
+      if: matrix.os == 'windows-2022'
+      run: |
+          # Skia's highest_version_dir.py script can't handle a directory that's not fully versioned
+          Move-Item -Path "C:\Program Files\LLVM\lib\clang\16" -Destination "C:\Program Files\LLVM\lib\clang\16.0.6"
+    
     - uses: ./.github/actions/setup-rust
       with:
         toolchain: ${{ matrix.rust_version }}
