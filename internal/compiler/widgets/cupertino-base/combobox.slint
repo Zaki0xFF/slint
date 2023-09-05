@@ -88,16 +88,56 @@ export component ComboBox {
             text: root.current-value;
         }
 
-        i-icon := Image {
-            colorize: Palette.foreground;
-            height: 13px;
-            source: Icons.dropdown;
+        Rectangle {
+            drop-shadow-blur: 3px;
+            drop-shadow-color: #00000066;
+            drop-shadow-offset-y: 0.5px;
             y: (parent.height - self.height) / 2;
+            width: 16px;
+            height: self.width;
+            border-radius: 4px;
+            background: Palette.cup-accent;
 
-            animate colorize { duration: 150ms; }
+            Rectangle {
+                drop-shadow-blur: 2px;
+                drop-shadow-color: #00000026;
+                drop-shadow-offset-y: 1px;
+                border-radius: parent.border-radius;
+                background: parent.background;
+            }
+
+            Rectangle {
+                drop-shadow-blur: 1px;
+                drop-shadow-color: #00000026;
+                drop-shadow-offset-y: 0.5px;
+                border-radius: parent.border-radius;
+                background: parent.background;
+            }
+
+            Rectangle {
+                border-radius: parent.border-radius;
+                background: Palette.cup-dimmer;
+                opacity: 0.17;
+            }
+
+            VerticalLayout {
+                padding: 4px;
+                spacing: 4px;
+
+                Image {
+                    x: (parent.width - self.width) / 2;
+                    colorize: Palette.cup-on-surface;
+                    source: Icons.chevron-up;
+                }
+
+                Image {
+                    x: (parent.width - self.width) / 2;
+                    colorize: Palette.cup-on-surface;
+                    source: Icons.chevron-down;
+                }
+            }
         }
     }
-
 
     i-popup := PopupWindow {
         x: 0;
@@ -106,7 +146,7 @@ export component ComboBox {
 
         MenuBorder {
             VerticalLayout {
-                padding: 5px;
+                padding: 4px;
 
                 for value[index] in root.model : ListItem {
                     text: value;

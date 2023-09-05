@@ -19,29 +19,27 @@ export component FocusBorder inherits Rectangle {
 }
 
 export component MenuBorder inherits Rectangle {
-    border-radius: 5px;
-    drop-shadow-blur: 1px;
-    drop-shadow-color: Palette.popup-drop-shadow-1;
+    drop-shadow-blur: 22px;
+    drop-shadow-color: #00000066;
+    drop-shadow-offset-y: 0.5px;
     background: Palette.background;
+    border-radius: 6px;
 
     Rectangle {
         width: 100%;
         height: 100%;
         border-radius: parent.border-radius;
-        drop-shadow-blur: 2px;
-        drop-shadow-color: Palette.popup-drop-shadow-2;
+        background: Palette.background;
 
-        Rectangle {
-            width: 100%;
-            height: 100%;
-            border-radius: parent.border-radius;
-            drop-shadow-blur: 22px;
-            drop-shadow-color: Palette.popup-drop-shadow-3;
-            drop-shadow-offset-y: 7px;
-            background: Palette.popup-background;
+        @children
+    }
 
-            @children
-        }
+    Rectangle {
+        width: 100%;
+        height: 100%;
+        border-radius: parent.border-radius;
+        border-width: 1px;
+        border-color: Palette.cup-popup-border;
     }
 }
 
@@ -64,20 +62,20 @@ export component ListItem {
         border-radius: 5px;
 
         i-layout := HorizontalLayout {
-            padding-left: 7px;
-            padding-right: 7px;
-            spacing: 2px;
+            padding-left: 8px;
+            padding-right: 8px;
+            spacing: 4px;
 
             i-icon := Image {
                 image-fit: contain;
                 source: Icons.check-mark;
-                colorize: Palette.foreground;
+                colorize: Palette.cup-forground;
                 visible: root.selected;
                 width: 10px;
             }
 
             i-text := Text {
-                color: Palette.foreground;
+                color: Palette.cup-forground;
                 font-size: Typography.body.font-size;
                 font-weight: Typography.body.font-weight;
                 vertical-alignment: center;
@@ -90,15 +88,10 @@ export component ListItem {
     i-touch-area := TouchArea {}
 
     states [
-        pressed when i-touch-area.pressed : {
-        }
         hover when i-touch-area.has-hover : {
-            i-background.background: Palette.primary;
-            i-text.color: Palette.on-primary;
-            i-icon.colorize: Palette.on-primary;
-        }
-        selected when root.selected : {
-
+            i-background.background: Palette.cup-accent;
+            i-text.color: Palette.cup-on-surface;
+            i-icon.colorize: Palette.cup-on-surface;
         }
     ]
 }
